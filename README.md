@@ -1,7 +1,7 @@
 # FirefoxMaterialYou
 
 A customized `userChrome.css` theme that brings Google's Material You 3 dynamic color scheme to Firefox on Windows. It extracts and applies your Windows accent color to the browser interface, creating a cohesive OS-integrated visual experience.
-ex. %APPDATA%\Mozilla\Firefox\Profiles\<profile>\chrome\userChrome.css
+
 
 ## Features
 
