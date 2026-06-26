@@ -1,9 +1,8 @@
 /* =========================================================
    20-buttons.css
-   Material You Smooth Circular Hover Effects
+   Material You Smooth Circular Hover Effects (純顏色防抖版)
    
-   Ensures toolbar buttons have a perfectly circular hover shape
-   without shifting adjacent elements or breaking the native layout.
+   完全移除任何物理變形與縮放動效，徹底解決選單位置抖動與外擴問題。
    ========================================================= */
 
 /* Target main toolbar buttons (back, forward, reload, home, extensions, menu, etc.) */
@@ -15,29 +14,34 @@
 #nav-bar .toolbarbutton-1 > .toolbarbutton-icon,
 #nav-bar .toolbarbutton-1 > .toolbarbutton-badge-stack {
   border-radius: 50% !important;
-  transition: background-color 0.15s ease, transform 0.15s ease !important;
-  /* Ensure width and height are equal for a perfect circle */
+  /* 移除 padding 與 transform 的動畫，只保留純背景色漸變 */
+  transition: background-color 0.12s ease !important;
+  /* 鎖定固定內襯與正圓比例 */
   padding: 6px !important; 
   aspect-ratio: 1 / 1 !important;
 }
 
-/* Material You style subtle hover and active states using oklch for consistency */
+/* Material You style subtle hover using oklch */
 #nav-bar .toolbarbutton-1:hover > .toolbarbutton-icon,
 #nav-bar .toolbarbutton-1:hover > .toolbarbutton-badge-stack {
   background-color: oklch(from AccentColor 0.85 0.04 h / 0.12) !important;
 }
 
+/* 【全新修正】點擊時純粹加深顏色，完全不驚動任何排版骨架 */
 #nav-bar .toolbarbutton-1:active > .toolbarbutton-icon,
 #nav-bar .toolbarbutton-1:active > .toolbarbutton-badge-stack {
-  background-color: oklch(from AccentColor 0.75 0.06 h / 0.22) !important;
-  transform: scale(0.95) !important;
+  background-color: oklch(from AccentColor 0.75 0.06 h / 0.24) !important;
+  
+  /* 確保沒有任何微動效干擾 */
+  padding: 6px !important;
+  transform: none !important;
 }
 
 /* Fix for urlbar inside buttons if any */
 .urlbar-page-action,
 #tracking-protection-icon-container,
 #identity-box {
-  border-radius: 20px !important; /* Slightly elongated pill for urlbar items, or 50% if square */
+  border-radius: 20px !important;
 }
 
 /* Ensure the panel menu buttons or specific standalone buttons also get the treatment */
