@@ -1,0 +1,31 @@
+/* =========================================================
+   30-chrome.css
+   Minimal chrome surface polish only. No button styling.
+   ========================================================= */
+
+/* Remove the line between selected tab and toolbar for the seamless look. */
+#navigator-toolbox {
+  border-bottom-color: transparent !important;
+}
+
+#nav-bar {
+  margin-top: 0 !important;
+}
+
+/* URL bar background only. No urlbar button hover overrides. */
+#urlbar-background,
+#searchbar {
+  background-color: var(--uc-field-bg) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+#urlbar[focused="true"] > #urlbar-background,
+#searchbar:focus-within {
+  background-color: var(--uc-field-focus-bg) !important;
+}
+
+#urlbar-input,
+.searchbar-textbox {
+  color: var(--uc-text-1) !important;
+}

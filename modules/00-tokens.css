@@ -1,0 +1,22 @@
+/* =========================================================
+   00-tokens.css
+   Tokens only. No Firefox component selectors here.
+
+   v0.5.1 Balanced:
+   Same structure as v0.5, only brightens the dark foreground
+   surfaces a little. Accent color is still involved.
+   ========================================================= */
+
+:root {
+  /* Follow UI accent color when Firefox/Windows exposes it. */
+  --uc-accent: AccentColor;
+
+  /* 降低 AccentColor 的比例（例如從 18% 降到 8%），並把基底色調暗 */
+  --uc-foreground-bg: color-mix(in srgb, var(--uc-accent) 8%, #1a1a1a);
+  --uc-field-bg: color-mix(in srgb, var(--uc-accent) 10%, #262626);
+  --uc-field-focus-bg: color-mix(in srgb, var(--uc-accent) 14%, #303030);
+
+  --uc-text-1: rgba(255, 255, 255, .92);
+  --uc-text-2: rgba(255, 255, 255, .72);
+  --uc-border-subtle: rgba(255, 255, 255, .08);
+}

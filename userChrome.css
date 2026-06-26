@@ -1,0 +1,14 @@
+/*
+  Firefox userChrome.css
+  v0.5 minimal foreground color pass
+
+  Rule:
+  - Colors live in modules/00-tokens.css + 10-colors.css
+  - Buttons stay untouched
+  - Native Firefox/Mica/tab geometry stays untouched
+*/
+
+@import url("modules/00-tokens.css");
+@import url("modules/10-colors.css");
+@import url("modules/20-buttons.css");
+@import url("modules/30-chrome.css");
