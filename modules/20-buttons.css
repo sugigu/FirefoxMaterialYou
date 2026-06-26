@@ -1,50 +1,40 @@
 /* =========================================================
    20-buttons.css
-   Material You Smooth Circular Hover Effects (純顏色防抖版)
+   Material You Perfect Circles (無痕完美版)
    
-   完全移除任何物理變形與縮放動效，徹底解決選單位置抖動與外擴問題。
+   移除引發空心小圈圈的 aspect-ratio 語法，改用最大寬高裁切，
+   完美治癒 AdGuard 等複合按鈕右側殘留陰影/黑圈的問題。
    ========================================================= */
 
-/* Target main toolbar buttons (back, forward, reload, home, extensions, menu, etc.) */
-#nav-bar .toolbarbutton-1 {
-  position: relative !important;
-}
-
-/* Modify the button background shape to be a perfect circle */
-#nav-bar .toolbarbutton-1 > .toolbarbutton-icon,
-#nav-bar .toolbarbutton-1 > .toolbarbutton-badge-stack {
+/* 1. 鎖定 Firefox 原生 Hover 灰色背景的底層元件，直接強制正圓化 */
+#nav-bar .toolbarbutton-1 > :is(.toolbarbutton-icon, .toolbarbutton-badge-stack) {
   border-radius: 50% !important;
-  /* 移除 padding 與 transform 的動畫，只保留純背景色漸變 */
+  
+  /* 【修正核心】移除 aspect-ratio，改用最大高度限制，並強制切除所有溢出邊緣 */
+  max-height: 32px !important;
+  overflow: hidden !important;
+  
+  /* 純背景色漸變，保證極致穩定、不觸發重排 */
   transition: background-color 0.12s ease !important;
-  /* 鎖定固定內襯與正圓比例 */
-  padding: 6px !important; 
-  aspect-ratio: 1 / 1 !important;
 }
 
-/* Material You style subtle hover using oklch */
-#nav-bar .toolbarbutton-1:hover > .toolbarbutton-icon,
-#nav-bar .toolbarbutton-1:hover > .toolbarbutton-badge-stack {
+/* 2. 套用 Material You 風格的低彩度 OKLCH 懸停與點擊顏色 */
+#nav-bar .toolbarbutton-1:hover > :is(.toolbarbutton-icon, .toolbarbutton-badge-stack) {
   background-color: oklch(from AccentColor 0.85 0.04 h / 0.12) !important;
 }
 
-/* 【全新修正】點擊時純粹加深顏色，完全不驚動任何排版骨架 */
-#nav-bar .toolbarbutton-1:active > .toolbarbutton-icon,
-#nav-bar .toolbarbutton-1:active > .toolbarbutton-badge-stack {
+#nav-bar .toolbarbutton-1:active > :is(.toolbarbutton-icon, .toolbarbutton-badge-stack) {
   background-color: oklch(from AccentColor 0.75 0.06 h / 0.24) !important;
-  
-  /* 確保沒有任何微動效干擾 */
-  padding: 6px !important;
-  transform: none !important;
 }
 
-/* Fix for urlbar inside buttons if any */
+/* 3. 確保數字貼紙（Badge）排版完全交還給 Firefox 原生，不干涉它的絕對定位 */
+#nav-bar .toolbarbutton-1 > .toolbarbutton-badge-stack > .toolbarbutton-badge {
+  position: absolute !important;
+}
+
+/* 4. 網址列內部小圖示（盾牌等）的圓角維持 */
 .urlbar-page-action,
 #tracking-protection-icon-container,
 #identity-box {
   border-radius: 20px !important;
-}
-
-/* Ensure the panel menu buttons or specific standalone buttons also get the treatment */
-#nav-bar toolbarbutton.subviewbutton {
-  border-radius: 50% !important;
 }
