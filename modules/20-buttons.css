@@ -1,156 +1,211 @@
 /* =========================================================
    20-buttons.css
-   Material You Perfect Circles (無痕完美版)
-   
-   移除引發空心小圈圈的 aspect-ratio 語法，改用最大寬高裁切，
-   完美治癒 AdGuard 等複合按鈕右側殘留陰影/黑圈的問題。
+   Firefox 152+ Material You Buttons
+   Toolbar / New Tab / Close / Audio moz-button
    ========================================================= */
 
-/* 1. 鎖定 Firefox 原生 Hover 灰色背景的底層元件，直接強制正圓化 */
+:root {
+  --my-hover: oklch(from AccentColor 0.85 0.04 h / 0.14);
+  --my-active: oklch(from AccentColor 0.75 0.06 h / 0.26);
+}
+
+/* =========================================================
+   1. 主工具列按鈕
+   ========================================================= */
+
 #nav-bar .toolbarbutton-1 > :is(.toolbarbutton-icon, .toolbarbutton-badge-stack) {
   border-radius: 50% !important;
-  
-  /* 【修正核心】移除 aspect-ratio，改用最大高度限制，並強制切除所有溢出邊緣 */
   max-height: 32px !important;
   overflow: hidden !important;
-  
-  /* 純背景色漸變，保證極致穩定、不觸發重排 */
+  background-color: transparent !important;
   transition: background-color 0.12s ease !important;
 }
 
-/* 2. 套用 Material You 風格的低彩度 OKLCH 懸停與點擊顏色 */
+#nav-bar .toolbarbutton-1 > .toolbarbutton-icon {
+    border-radius: 50% !important;
+    overflow: hidden !important;
+}
+
+/* badge stack */
+#nav-bar .toolbarbutton-1 > .toolbarbutton-badge-stack {
+    border-radius: 50% !important;
+
+    /* 不要裁 badge */
+    overflow: visible !important;
+}
+
+
 #nav-bar .toolbarbutton-1:hover > :is(.toolbarbutton-icon, .toolbarbutton-badge-stack) {
-  background-color: oklch(from AccentColor 0.85 0.04 h / 0.12) !important;
+  background-color: var(--my-hover) !important;
 }
 
 #nav-bar .toolbarbutton-1:active > :is(.toolbarbutton-icon, .toolbarbutton-badge-stack) {
-  background-color: oklch(from AccentColor 0.75 0.06 h / 0.24) !important;
+  background-color: var(--my-active) !important;
 }
 
-/* 3. 確保數字貼紙（Badge）排版完全交還給 Firefox 原生，不干涉它的絕對定位 */
 #nav-bar .toolbarbutton-1 > .toolbarbutton-badge-stack > .toolbarbutton-badge {
   position: absolute !important;
 }
 
-/* 4. 網址列內部小圖示（盾牌等）的圓角維持 */
+/* =========================================================
+   2. 網址列內部小按鈕
+   ========================================================= */
+
 .urlbar-page-action,
 #tracking-protection-icon-container,
 #identity-box {
   border-radius: 20px !important;
 }
+
 /* =========================================================
-   20-buttons.css - 分頁列按鈕修正 (絕對水平對齊版)
+   3. 新分頁按鈕
    ========================================================= */
 
-/* 1. 重設新分頁外殼，直接讓按鈕本體扮演 28px 正圓，徹底拔除原生干擾 */
-#tabs-newtab-button,
 #TabsToolbar #tabs-newtab-button {
-  /* 【關鍵】關掉原生主題繪製，否則 OS 自己畫的 hover 效果會蓋掉我們的 background-color */
   appearance: none !important;
   -moz-appearance: none !important;
-  
-  background-color: transparent !important;
-  background-image: none !important;
-  box-shadow: none !important;
-  border: none !important;
-  outline: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  
-  /* 鎖定 28px Hover 正圓，所有尺寸都吃在按鈕本體，不依賴內部 icon */
+
   width: 28px !important;
   height: 28px !important;
   min-width: 28px !important;
   min-height: 28px !important;
   max-width: 28px !important;
   max-height: 28px !important;
-  box-sizing: border-box !important;
-  
+
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+
   border-radius: 50% !important;
-  position: relative !important;
-  
-  /* 強制讓外殼跟分頁列中線對齊 */
+  background: transparent !important;
+
+  display: inline-grid !important;
+  place-items: center !important;
   align-self: center !important;
-  
+  position: relative !important;
+
   transition: background-color 0.12s ease !important;
 }
 
-/* 2. 【關鍵】.toolbarbutton-icon 是 XUL <image>（replaced element），
-      Gecko 不會在它上面產生 ::before/::after，之前的暗色歪十字其實
-      一直是這顆原生圖示本身。直接整顆關掉，不要再浪費力氣調它。 */
-#tabs-newtab-button .toolbarbutton-icon {
+#TabsToolbar #tabs-newtab-button:hover {
+  background-color: var(--my-hover) !important;
+}
+
+#TabsToolbar #tabs-newtab-button:active {
+  background-color: var(--my-active) !important;
+}
+
+#TabsToolbar #tabs-newtab-button .toolbarbutton-icon {
   display: none !important;
 }
 
-/* 2.5 【純白十字】不用文字字元（字重跟左側 SVG 的 X 天生對不上），
-      改用兩條精準控制粗細的線條疊成十字，粗細/長度都跟左側視覺重量校準 */
-#tabs-newtab-button::before,
-#tabs-newtab-button::after {
+#TabsToolbar #tabs-newtab-button::before,
+#TabsToolbar #tabs-newtab-button::after {
   content: "" !important;
   position: absolute !important;
   top: 50% !important;
   left: 50% !important;
-  background-color: #ffffff !important;
+  background-color: currentColor !important;
   border-radius: 1px !important;
   pointer-events: none !important;
 }
 
-/* 橫線 */
-#tabs-newtab-button::before {
+#TabsToolbar #tabs-newtab-button::before {
   width: 14px !important;
   height: 2px !important;
   transform: translate(-50%, -50%) !important;
 }
 
-/* 直線 */
-#tabs-newtab-button::after {
+#TabsToolbar #tabs-newtab-button::after {
   width: 2px !important;
   height: 14px !important;
   transform: translate(-50%, -50%) !important;
 }
 
-/* 3. 當滑鼠懸停在新分頁按鈕上時顯色，背景色直接吃在按鈕本體上
-      【關鍵】這裡的選擇器一定要跟第1條一樣是 #TabsToolbar #tabs-newtab-button 雙重ID，
-      specificity 才會打贏第1條的 transparent !important，否則 hover 顏色會被蓋掉 */
-#TabsToolbar #tabs-newtab-button:hover {
-  background-color: oklch(from AccentColor 0.85 0.04 h / 0.14) !important;
-}
+/* =========================================================
+   4. 分頁關閉按鈕
+   ========================================================= */
 
-#TabsToolbar #tabs-newtab-button:active {
-  background-color: oklch(from AccentColor 0.75 0.06 h / 0.26) !important;
-}
-
-
-
-/* 4. 分頁內部的關閉按鈕 (X) 維持精緻正圓 */
 .tab-close-button {
-  border-radius: 50% !important;
-  aspect-ratio: 1 / 1 !important;
-  width: 20px !important;
-  height: 20px !important;
-  max-width: 20px !important;
-  max-height: 20px !important;
+  appearance: none !important;
+  -moz-appearance: none !important;
+
+  width: 22px !important;
+  height: 22px !important;
+  min-width: 22px !important;
+  min-height: 22px !important;
+  max-width: 22px !important;
+  max-height: 22px !important;
+
   padding: 0 !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  transition: background-color 0.12s ease !important;
-  
-  /* 確保關閉按鈕本身在分頁內部也是絕對居中 */
+  margin-inline: 2px !important;
+  border: 0 !important;
+  box-shadow: none !important;
+
+  border-radius: 50% !important;
+  background: transparent !important;
+
+  display: inline-grid !important;
+  place-items: center !important;
   align-self: center !important;
+  box-sizing: border-box !important;
+
+  transition: background-color 0.12s ease !important;
 }
 
 .tab-close-button:hover {
-  background-color: oklch(from AccentColor 0.85 0.04 h / 0.14) !important;
+  background-color: var(--my-hover) !important;
 }
 
 .tab-close-button:active {
-  background-color: oklch(from AccentColor 0.75 0.06 h / 0.26) !important;
+  background-color: var(--my-active) !important;
 }
 
 .tab-close-button .toolbarbutton-icon {
   width: 14px !important;
   height: 14px !important;
   padding: 0 !important;
-  background-color: transparent !important;
+  margin: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* =========================================================
+   5. 分頁聲音按鈕 Firefox 152+ moz-button
+   ========================================================= */
+
+tab .tab-audio-button {
+  width: 22px !important;
+  height: 22px !important;
+  min-width: 22px !important;
+  min-height: 22px !important;
+  max-width: 22px !important;
+  max-height: 22px !important;
+
+  padding: 0 !important;
+  margin-inline: 2px !important;
+
+  border-radius: 50% !important;
+  overflow: hidden !important;
+  background: transparent !important;
+
+  --button-size-icon-small: 20px !important;
+  --button-min-height: 20px !important;
+  --button-padding: 0 !important;
+  --button-padding-icon: 0 0 0 19px !important;
+  --button-border-radius: 50% !important;
+
+  --button-background-color-ghost: transparent !important;
+  --button-background-color-ghost-hover: var(--my-hover) !important;
+  --button-background-color-ghost-active: var(--my-active) !important;
+}
+
+tab .tab-audio-button:hover {
+  background-color: var(--my-hover) !important;
+}
+
+tab .tab-audio-button:active {
+  background-color: var(--my-active) !important;
 }
