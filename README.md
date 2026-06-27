@@ -15,6 +15,12 @@ A customized `userChrome.css` theme that brings Google's Material You 3 dynamic 
 * **OS:** Windows 11 (Recommended)
 * **Firefox Version:** Tested on **Firefox v152.x** (Dark Mode)
 
+## Design philosophy
+
+* Preserve Firefox's native layout whenever possible.
+* Only restyle frequently used UI elements.
+* Hide rarely used controls instead of maintaining custom styles for them.
+
 ---
 
 ## Prerequisites (Firefox Configuration)
