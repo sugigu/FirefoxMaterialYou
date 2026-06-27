@@ -38,3 +38,119 @@
 #identity-box {
   border-radius: 20px !important;
 }
+/* =========================================================
+   20-buttons.css - 分頁列按鈕修正 (絕對水平對齊版)
+   ========================================================= */
+
+/* 1. 重設新分頁外殼，直接讓按鈕本體扮演 28px 正圓，徹底拔除原生干擾 */
+#tabs-newtab-button,
+#TabsToolbar #tabs-newtab-button {
+  /* 【關鍵】關掉原生主題繪製，否則 OS 自己畫的 hover 效果會蓋掉我們的 background-color */
+  appearance: none !important;
+  -moz-appearance: none !important;
+  
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  outline: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  
+  /* 鎖定 28px Hover 正圓，所有尺寸都吃在按鈕本體，不依賴內部 icon */
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  min-height: 28px !important;
+  max-width: 28px !important;
+  max-height: 28px !important;
+  box-sizing: border-box !important;
+  
+  border-radius: 50% !important;
+  position: relative !important;
+  
+  /* 強制讓外殼跟分頁列中線對齊 */
+  align-self: center !important;
+  
+  transition: background-color 0.12s ease !important;
+}
+
+/* 2. 【關鍵】.toolbarbutton-icon 是 XUL <image>（replaced element），
+      Gecko 不會在它上面產生 ::before/::after，之前的暗色歪十字其實
+      一直是這顆原生圖示本身。直接整顆關掉，不要再浪費力氣調它。 */
+#tabs-newtab-button .toolbarbutton-icon {
+  display: none !important;
+}
+
+/* 2.5 【純白十字】不用文字字元（字重跟左側 SVG 的 X 天生對不上），
+      改用兩條精準控制粗細的線條疊成十字，粗細/長度都跟左側視覺重量校準 */
+#tabs-newtab-button::before,
+#tabs-newtab-button::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  background-color: #ffffff !important;
+  border-radius: 1px !important;
+  pointer-events: none !important;
+}
+
+/* 橫線 */
+#tabs-newtab-button::before {
+  width: 14px !important;
+  height: 2px !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+/* 直線 */
+#tabs-newtab-button::after {
+  width: 2px !important;
+  height: 14px !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+/* 3. 當滑鼠懸停在新分頁按鈕上時顯色，背景色直接吃在按鈕本體上
+      【關鍵】這裡的選擇器一定要跟第1條一樣是 #TabsToolbar #tabs-newtab-button 雙重ID，
+      specificity 才會打贏第1條的 transparent !important，否則 hover 顏色會被蓋掉 */
+#TabsToolbar #tabs-newtab-button:hover {
+  background-color: oklch(from AccentColor 0.85 0.04 h / 0.14) !important;
+}
+
+#TabsToolbar #tabs-newtab-button:active {
+  background-color: oklch(from AccentColor 0.75 0.06 h / 0.26) !important;
+}
+
+
+
+/* 4. 分頁內部的關閉按鈕 (X) 維持精緻正圓 */
+.tab-close-button {
+  border-radius: 50% !important;
+  aspect-ratio: 1 / 1 !important;
+  width: 20px !important;
+  height: 20px !important;
+  max-width: 20px !important;
+  max-height: 20px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: background-color 0.12s ease !important;
+  
+  /* 確保關閉按鈕本身在分頁內部也是絕對居中 */
+  align-self: center !important;
+}
+
+.tab-close-button:hover {
+  background-color: oklch(from AccentColor 0.85 0.04 h / 0.14) !important;
+}
+
+.tab-close-button:active {
+  background-color: oklch(from AccentColor 0.75 0.06 h / 0.26) !important;
+}
+
+.tab-close-button .toolbarbutton-icon {
+  width: 14px !important;
+  height: 14px !important;
+  padding: 0 !important;
+  background-color: transparent !important;
+}
