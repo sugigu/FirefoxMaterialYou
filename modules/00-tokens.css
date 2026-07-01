@@ -1,22 +1,27 @@
-/* =========================================================
-   00-tokens.css
-   Tokens only. No Firefox component selectors here.
-
-   v0.5.1 Balanced:
-   Same structure as v0.5, only brightens the dark foreground
-   surfaces a little. Accent color is still involved.
-   ========================================================= */
-
 :root {
-  /* Follow UI accent color when Firefox/Windows exposes it. */
+  /* Windows Accent */
   --uc-accent: AccentColor;
 
-  /* 降低 AccentColor 的比例（例如從 18% 降到 8%），並把基底色調暗 */
-  --uc-foreground-bg: color-mix(in srgb, var(--uc-accent) 8%, #1a1a1a);
-  --uc-field-bg: color-mix(in srgb, var(--uc-accent) 10%, #262626);
-  --uc-field-focus-bg: color-mix(in srgb, var(--uc-accent) 14%, #303030);
+  /* 【自動變色修正版】
+     Chrome-like hierarchy
+     
+     提示：如果覺得顏色還是跟 Chrome 有微幅差距，
+     可以微調中間的明度（例如 0.36 改 0.34 或 0.38）
+     或是彩度（例如 0.020 改 0.015 或 0.025）
+  */
 
-  --uc-text-1: rgba(255, 255, 255, .92);
-  --uc-text-2: rgba(255, 255, 255, .72);
-  --uc-border-subtle: rgba(255, 255, 255, .08);
+  /* 頂部工具列 / 選中分頁背景色 */
+  /* 說明：將明度設為 0.36，但大幅降低彩度至 0.020，並將色相 (h) 往綠色/灰色方向修正 -15 度 */
+  --uc-foreground-bg: oklch(from var(--uc-accent) 0.34 0.025 h);
+
+  /* 網址列未聚焦背景色（比工具列更暗、彩度更低，營造 Chrome 的下凹階層感） */
+  --uc-field-bg: oklch(from var(--uc-accent) 0.26 0.015 h);
+  
+  /* 網址列聚焦背景色 */
+  --uc-field-focus-bg: oklch(from var(--uc-accent) 0.30 0.020 h);
+
+  /* 文字與邊框保持不變 */
+  --uc-text-1: rgba(255,255,255,.92);
+  --uc-text-2: rgba(255,255,255,.72);
+  --uc-border-subtle: rgba(255,255,255,.08);
 }
