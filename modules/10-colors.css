@@ -1,41 +1,57 @@
 /* =========================================================
    10-colors.css
-   Color variables only.
-   No button radius, size, padding, hover shape, or tab layout.
+   Chrome / Material You color layer
    ========================================================= */
 
 :root {
   color-scheme: dark !important;
 
-  /* Main toolbar foreground surface. */
+  /* Toolbar */
   --toolbar-bgcolor: var(--uc-foreground-bg) !important;
   --toolbar-color: var(--uc-text-1) !important;
 
-  /* Selected tab should use the same surface as the toolbar. */
+  /* Selected tab */
   --tab-selected-bgcolor: var(--uc-foreground-bg) !important;
   --tab-selected-textcolor: var(--uc-text-1) !important;
 
-  /* URL field color only. Internal buttons/hover are native. */
+  /* Urlbar */
   --lwt-toolbar-field-background-color: var(--uc-field-bg) !important;
   --lwt-toolbar-field-color: var(--uc-text-1) !important;
   --lwt-toolbar-field-border-color: transparent !important;
+
   --lwt-toolbar-field-focus: var(--uc-field-focus-bg) !important;
   --lwt-toolbar-field-focus-color: var(--uc-text-1) !important;
 
   --chrome-content-separator-color: transparent !important;
 }
 
-/* Do NOT paint #navigator-toolbox / #titlebar / #TabsToolbar.
-   Let Firefox keep the native accent tab strip. */
+/* ---------- Frame ---------- */
+
+#navigator-toolbox,
+#titlebar,
+#TabsToolbar {
+  /* 將彩度從 0.075 降到 0.025，並同樣減去 15 度色相以對齊 Chrome */
+  background-color: oklch(from AccentColor 0.59 0.055 h) !important;
+    background-image:
+        linear-gradient(
+            to bottom,
+            rgba(255,255,255,.035),
+            rgba(255,255,255,.00)
+        ) !important;
+}
+/* ---------- Toolbar ---------- */
 
 #nav-bar,
 #PersonalToolbar {
   background-color: var(--uc-foreground-bg) !important;
   background-image: none !important;
   color: var(--uc-text-1) !important;
+
   border-color: transparent !important;
   box-shadow: none !important;
 }
+
+/* ---------- Active Tab ---------- */
 
 .tabbrowser-tab[selected] > .tab-stack > .tab-background,
 .tabbrowser-tab[selected="true"] > .tab-stack > .tab-background,
@@ -44,20 +60,32 @@
   background-image: none !important;
   box-shadow: none !important;
 }
-/* =========================================================
-   10-colors.css - 真．Material You 動態配色風格
-   ========================================================= */
 
-#navigator-toolbox,
-#titlebar,
-#TabsToolbar {
-  /* 
-    from AccentColor: 讀取系統強調色
-    oklch: 轉換為感知色彩空間
-    0.32: 鎖定視覺亮度在 32% (偏暗、沉穩的背景，可依喜好在 0.25~0.40 之間微調)
-    0.04: 鎖定彩度在 0.04 (Material You 的精髓！不管什麼顏色，都只抽出一點點粉灰感)
-    h: 保留原本顏色的色相
-  */
-  background-color: oklch(from AccentColor 0.32 0.04 h) !important;
+/* ---------- Urlbar ---------- */
+
+#urlbar-background,
+#searchbar {
+  background-color: var(--uc-field-bg) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+#urlbar[focused="true"] > #urlbar-background,
+#searchbar:focus-within {
+  background-color: var(--uc-field-focus-bg) !important;
+}
+
+#urlbar-input,
+.searchbar-textbox {
+  color: var(--uc-text-1) !important;
+}
+
+.tabbrowser-tab:not([selected]):hover
+  > .tab-stack
+  > .tab-background,
+.tabbrowser-tab:not([visuallyselected]):hover
+  > .tab-stack
+  > .tab-background {
+  background-color: rgba(0, 0, 0, 0.18) !important;
   background-image: none !important;
 }
